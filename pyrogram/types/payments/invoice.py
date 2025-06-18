@@ -52,38 +52,50 @@ class Invoice(Object):
     def __init__(
         self,
         *,
-        title: str,
-        description :  str,
         currency: str,
-        total_amount: int,
-        start_parameter: str,
-        shipping_address_requested: bool = None,
+        prices: list,
         test: bool = None,
-        receipt_message_id: int = None,
+        name_requested: bool = None,
+        phone_requested: bool = None,
+        email_requested: bool = None,
+        shipping_address_requested: bool = None,
+        flexible: bool = None,
+        phone_to_provider: bool = None,
+        email_to_provider: bool = None,
+        recurring: bool = None,
+        suggested_tip_amounts: list = None
         # TODO: Implement photo, extended_media parameters
     ):
         super().__init__()
 
-        self.title = title
-        self.description = description
         self.currency = currency
-        self.total_amount = total_amount
-        self.start_parameter = start_parameter
-        self.shipping_address_requested = shipping_address_requested
+        self.prices = prices
         self.test = test
-        self.receipt_message_id = receipt_message_id
+        self.name_requested = name_requested
+        self.phone_requested = phone_requested
+        self.email_requested = email_requested
+        self.shipping_address_requested = shipping_address_requested
+        self.flexible = flexible
+        self.phone_to_provider = phone_to_provider
+        self.email_to_provider = email_to_provider
+        self.recurring = recurring
+        self.suggested_tip_amounts = suggested_tip_amounts
 
     @staticmethod
     def _parse(
         message_invoice: "raw.types.MessageMediaInvoice"
     ) -> "Invoice":
         return Invoice(
-            title=message_invoice.title,
-            description=message_invoice.description,
             currency=message_invoice.currency,
-            total_amount=message_invoice.total_amount,
-            start_parameter=message_invoice.start_param,
-            shipping_address_requested=message_invoice.shipping_address_requested,
+            prices=message_invoice.prices,
             test=message_invoice.test,
-            receipt_message_id=message_invoice.receipt_msg_id
+            name_requested=message_invoice.name_requested,
+            phone_requested=message_invoice.phone_requested,
+            email_requested=message_invoice.email_requested,
+            shipping_address_requested=message_invoice.shipping_address_requested,
+            flexible=message_invoice.flexible,
+            phone_to_provider=message_invoice.phone_to_provider,
+            email_to_provider=message_invoice.email_to_provider,
+            recurring=message_invoice.recurring,
+            suggested_tip_amounts=message_invoice.suggested_tip_amounts
         )
