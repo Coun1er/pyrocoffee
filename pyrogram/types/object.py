@@ -61,6 +61,10 @@ class Object:
         if isinstance(obj, datetime):
             return str(obj)
 
+
+        if not hasattr(obj, '__dict__'):
+            return str(obj)  # Return string representation for objects without __dict__
+
         attributes_to_hide = [
             "raw"
         ]
